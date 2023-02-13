@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\Workspace;
 use Illuminate\Support\Facades\Config;
 
-function connectWorkspace(\App\Models\Workspace $workspace)
+function connectWorkspace(Workspace $workspace)
 {
     Config::set('database.connections.workspace.database', "workspace_{$workspace->id}");
 }

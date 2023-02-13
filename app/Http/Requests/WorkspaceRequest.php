@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class WorkspaceRequest extends FormRequest
 {
@@ -25,7 +26,9 @@ class WorkspaceRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+             'name' => 'required|min:5|max:255',
+             'password' => 'required|min:6',
+             'user_id' => ['required', Rule::exists('users', 'id')],
         ];
     }
 
