@@ -54,6 +54,14 @@ class Workspace extends Model
         throw new \Exception('Undefined workspace connection');
     }
 
+    public function enterWorkspaceView()
+    {
+        return "
+        <a class=\"btn btn-sm btn-link\" href=\"" . route('admin.workspace.entries', $this->id). "\">
+            <i class=\"la la-sign-in-alt\"></i> Enter
+        </a>";
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

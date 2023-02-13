@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
 // --------------------------
@@ -18,4 +19,10 @@ Route::group([
 ], function () { // custom admin routes
     Route::crud('user', 'UserCrudController');
     Route::crud('workspace', 'WorkspaceCrudController');
+
+    // show workspace entries
+    Route::middleware('workspace.admin')->prefix('workspace/{workspace}')->group(function () {
+        Route::get('entries', [WorkspaceController::class, 'index'])->name('admin.workspace.entries');
+        Route::crud('customers', 'CustomerCrudController');
+    });
 }); // this should be the absolute last line of this file

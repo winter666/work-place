@@ -43,6 +43,7 @@ class WorkspaceCrudController extends CrudController
         CRUD::column('id');
         CRUD::column('name');
         CRUD::column('status');
+        $this->crud->addButtonFromModelFunction('line', 'enter', 'enterWorkspaceView', 'beginning');
     }
 
     /**
