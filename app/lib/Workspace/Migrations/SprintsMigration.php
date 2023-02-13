@@ -1,20 +1,23 @@
 <?php
 
+
 namespace App\Lib\Workspace\Migrations;
+
 
 use Illuminate\Database\Schema\Blueprint;
 
-class CustomersMigration extends AbstractMigration
+class SprintsMigration extends AbstractMigration
 {
-    protected string $table = 'customers';
+    protected string $table = 'sprints';
 
     public function upClosure(): \Closure
     {
         return function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
-            $table->string('password');
+            $table->text('description');
+            $table->dateTime('start_at');
+            $table->dateTime('end_at');
             $table->timestamps();
         };
     }

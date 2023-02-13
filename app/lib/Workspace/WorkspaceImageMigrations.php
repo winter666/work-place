@@ -5,6 +5,8 @@ namespace App\Lib\Workspace;
 
 
 use App\Lib\Workspace\Migrations\CustomersMigration;
+use App\Lib\Workspace\Migrations\SprintsMigration;
+use App\Lib\Workspace\Migrations\TasksMigration;
 
 class WorkspaceImageMigrations
 {
@@ -12,6 +14,8 @@ class WorkspaceImageMigrations
     {
         return [
             CustomersMigration::class,
+            SprintsMigration::class,
+            TasksMigration::class,
         ];
     }
 }

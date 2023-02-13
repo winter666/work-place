@@ -6,6 +6,7 @@ namespace App\Lib\Workspace;
 
 use App\Lib\Workspace\Migrations\AbstractMigration;
 use App\Models\Workspace;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 
 class WorkspaceImageCreator
@@ -28,13 +29,27 @@ class WorkspaceImageCreator
     public function migrate()
     {
         $migrations = WorkspaceImageMigrations::getMigrations();
+        $this->workspace->connect()->create('migrations', function (Blueprint $table) {
+            $table->string('name');
+            $table->timestamps();
+        });
 
         /**
          * @var AbstractMigration $migration
          */
-        foreach ($migrations as $migrationClass) {
-            $migration = new $migrationClass($this->workspace);
-            $migration->up();
+        $completed = [];
+        $workspaceTable = DB::connection('workspace')->table('migrations');
+        try {
+            foreach ($migrations as $migrationClass) {
+                $migration = new $migrationClass($this->workspace);
+                $migration->up();
+                $completed[] = ['name' => $migration->getTable()];
+            }
+
+            $workspaceTable->insert($completed);
+        } catch (\Exception $e) {
+            $workspaceTable->insert($completed);
+            throw new \Exception($e->getMessage());
         }
     }
 
