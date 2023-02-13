@@ -2,8 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Lib\Workspace\WorkspaceImageCreator;
-use App\Lib\Workspace\WorkspaceStatusesConst;
+use App\Lib\Workspace\WorkspaceDestroyer;
 use App\Models\Workspace;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -13,7 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class WorkspaceUpJob implements ShouldQueue
+class WorkspaceDownJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -22,7 +21,7 @@ class WorkspaceUpJob implements ShouldQueue
      *
      * @param Workspace $workspace
      */
-    public function __construct(protected Workspace $workspace)
+    public function __construct(protected int $workspace_id)
     {
         //
     }
@@ -35,14 +34,10 @@ class WorkspaceUpJob implements ShouldQueue
     public function handle()
     {
         try {
-            $this->workspace->update(['status' => WorkspaceStatusesConst::STATUS_PROCESSING]);
-            $image = new WorkspaceImageCreator($this->workspace);
-            $image->install();
-            $image->migrate();
+            $service = new WorkspaceDestroyer($this->workspace_id);
+            $service->run();
         } catch (\Exception $e) {
             Log::debug($e->getMessage(), $e->getTrace());
-            $this->status = 'failed';
-            $this->workspace->update(['status' => WorkspaceStatusesConst::STATUS_ERROR]);
         }
     }
 }

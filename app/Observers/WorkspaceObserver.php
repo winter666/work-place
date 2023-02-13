@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\WorkspaceDownJob;
 use App\Jobs\WorkspaceUpJob;
 use App\Models\Workspace;
 
@@ -37,7 +38,7 @@ class WorkspaceObserver
      */
     public function deleted(Workspace $workspace)
     {
-        //
+        WorkspaceDownJob::dispatch($workspace->id);
     }
 
     /**

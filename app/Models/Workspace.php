@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\Observers\WorkspaceObserver;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Lib\WorkspaceStatusesConst;
+use App\Lib\Workspace\WorkspaceStatusesConst;
+use Illuminate\Database\Schema\Builder;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * Class Workspace
@@ -43,6 +44,15 @@ class Workspace extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function connect(): Builder
+    {
+        if ($this->id) {
+            connectWorkspace($this);
+            return Schema::connection('workspace');
+        }
+
+        throw new \Exception('Undefined workspace connection');
+    }
 
     /*
     |--------------------------------------------------------------------------
