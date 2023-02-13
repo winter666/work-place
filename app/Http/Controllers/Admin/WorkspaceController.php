@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Workspace;
 use App\Models\WorkspaceImage\Customer;
+use App\Models\WorkspaceImage\Sprint;
 use Illuminate\Routing\Controller;
 
 /**
@@ -23,7 +24,7 @@ class WorkspaceController extends Controller
             ],
             'page' => 'resources/views/admin/workspace.blade.php',
             'controller' => 'app/Http/Controllers/Admin/WorkspaceController.php',
-            'entities' => [ new Customer ],
+            'entities' => [ new Customer, new Sprint ],
             'workspace' => $workspace,
         ]);
     }

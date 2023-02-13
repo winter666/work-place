@@ -16,6 +16,9 @@ class TasksMigration extends AbstractMigration
            $table->string('name');
            $table->text('description');
            $table->string('tag');
+           $table->integer('priority');
+           $table->string('status');
+           $table->dateTime('closed_at')->nullable();
            $table->unsignedBigInteger('sprint_id')->nullable();
            $table->unsignedBigInteger('customer_id')->nullable();
            $table->foreign('sprint_id')->references('id')->on('sprints');

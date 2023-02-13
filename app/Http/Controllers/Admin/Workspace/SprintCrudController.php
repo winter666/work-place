@@ -1,21 +1,20 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin\Workspace;
 
+
 use App\Http\Requests\CustomerRequest;
-use App\Models\Workspace;
-use App\Models\WorkspaceImage\Customer;
+use App\Models\WorkspaceImage\Sprint;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class CustomerCrudController
  * @package App\Http\Controllers\Admin\Workspace
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class CustomerCrudController extends CrudController
+class SprintCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -31,9 +30,9 @@ class CustomerCrudController extends CrudController
     public function setup()
     {
         $workspaceId = $this->crud->getRequest()->workspace;
-        CRUD::setModel(Customer::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') .'/workspace/'. $workspaceId . '/' . (new Customer)->getTable());
-        CRUD::setEntityNameStrings('customer', 'customers');
+        CRUD::setModel(Sprint::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') .'/workspace/'. $workspaceId . '/' . (new Sprint)->getTable());
+        CRUD::setEntityNameStrings('sprint', 'sprints');
     }
 
     /**
@@ -46,8 +45,9 @@ class CustomerCrudController extends CrudController
     {
         CRUD::column('id');
         CRUD::column('name');
-        CRUD::column('email');
-        CRUD::column('password');
+        CRUD::column('description');
+        CRUD::column('start_at');
+        CRUD::column('end_at');
     }
 
     /**
@@ -61,8 +61,10 @@ class CustomerCrudController extends CrudController
         CRUD::setValidation(CustomerRequest::class);
 
         CRUD::field('name');
-        CRUD::field('email');
-        CRUD::field('password');
+        CRUD::field('description');
+        CRUD::field('start_at');
+        CRUD::field('end_at');
+        CRUD::field('closed_at');
     }
 
     /**

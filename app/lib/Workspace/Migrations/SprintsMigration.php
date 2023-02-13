@@ -15,9 +15,10 @@ class SprintsMigration extends AbstractMigration
         return function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->dateTime('start_at');
             $table->dateTime('end_at');
+            $table->dateTime('closed_at')->nullable();
             $table->timestamps();
         };
     }

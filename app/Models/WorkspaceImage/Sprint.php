@@ -5,9 +5,8 @@ namespace App\Models\WorkspaceImage;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
 
-class Customer extends Model
+class Sprint extends Model
 {
     use HasFactory, CrudTrait;
 
@@ -19,17 +18,13 @@ class Customer extends Model
     protected $connection = 'workspace';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    protected $fillable = [ 'name', 'email', 'password' ];
-    protected $hidden = ['password'];
+    protected $fillable = [ 'name', 'description', 'start_at', 'end_at', 'closed_at' ];
 
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    public function setPasswordAttribute($value) {
-        $this->attributes['password'] = Hash::make($value);
-    }
 
     /*
     |--------------------------------------------------------------------------
