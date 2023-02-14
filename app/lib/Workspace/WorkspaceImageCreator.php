@@ -6,6 +6,7 @@ namespace App\Lib\Workspace;
 
 use App\Lib\Workspace\Migrations\AbstractMigration;
 use App\Models\Workspace;
+use Carbon\Carbon;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 
@@ -30,6 +31,7 @@ class WorkspaceImageCreator
     {
         $migrations = WorkspaceImageMigrations::getMigrations();
         $this->workspace->connect()->create('migrations', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->timestamps();
         });
@@ -43,7 +45,7 @@ class WorkspaceImageCreator
             foreach ($migrations as $migrationClass) {
                 $migration = new $migrationClass($this->workspace);
                 $migration->up();
-                $completed[] = ['name' => $migration->getTable()];
+                $completed[] = ['name' => $migration->getTable(), 'created_at' => Carbon::now()];
             }
 
             $workspaceTable->insert($completed);
