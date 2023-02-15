@@ -2,20 +2,17 @@
 
 namespace App\Models\WorkspaceImage;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Sprint extends Model
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Sprint extends AbstractImageEntry
 {
-    use HasFactory, CrudTrait;
 
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $connection = 'workspace';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
     protected $fillable = [ 'name', 'description', 'start_at', 'end_at', 'closed_at' ];
@@ -31,4 +28,9 @@ class Sprint extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
 }

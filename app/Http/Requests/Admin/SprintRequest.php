@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,9 +27,8 @@ class SprintRequest extends FormRequest
         return [
             'name' => 'required|min:5|max:255',
             'description' => 'string|nullable',
-            'start_at' => 'required|datetime',
-            'end_at' => 'required|datetime',
-            'closed_at' => 'nullable|datetime',
+            'start_at' => 'required|date',
+            'end_at' => 'required|date',
         ];
     }
 }

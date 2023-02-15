@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin\Workspace;
 
-
-use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\Admin\SprintRequest;
 use App\Models\WorkspaceImage\Sprint;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -58,13 +56,12 @@ class SprintCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CustomerRequest::class);
+        CRUD::setValidation(SprintRequest::class);
 
         CRUD::field('name');
         CRUD::field('description');
         CRUD::field('start_at');
         CRUD::field('end_at');
-        CRUD::field('closed_at');
     }
 
     /**

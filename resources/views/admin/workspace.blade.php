@@ -15,11 +15,11 @@
         <tbody>
             @foreach($entities as $entity)
                 <tr>
-                    <td>{{ $entity->getTable() }}</td>
+                    <td>{{ trans('workspace.'.$entity->getSubject()) }}</td>
                     <td>
                         <a
                             class="btn btn-sm btn-link"
-                            href="{{ backpack_url('workspace', ['workspace' => $workspace, 'entry' => $entity->getTable()]) }}"
+                            href="{{ backpack_url('workspace', ['workspace' => $workspace, 'entry' => $entity->getSubject()]) }}"
                         >
                             <i class="la la-eye"></i> View
                         </a>

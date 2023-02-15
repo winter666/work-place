@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Lib\Workspace\WorkspaceImageMigrations;
 use App\Models\Workspace;
 use App\Models\WorkspaceImage\Customer;
 use App\Models\WorkspaceImage\Sprint;
@@ -24,7 +25,7 @@ class WorkspaceController extends Controller
             ],
             'page' => 'resources/views/admin/workspace.blade.php',
             'controller' => 'app/Http/Controllers/Admin/WorkspaceController.php',
-            'entities' => [ new Customer, new Sprint ],
+            'entities' => WorkspaceImageMigrations::getEntries(),
             'workspace' => $workspace,
         ]);
     }

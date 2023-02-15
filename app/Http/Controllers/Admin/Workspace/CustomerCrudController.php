@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Workspace;
 
-use App\Http\Requests\CustomerRequest;
-use App\Models\Workspace;
+use App\Http\Requests\Admin\CustomerRequest;
 use App\Models\WorkspaceImage\Customer;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class CustomerCrudController

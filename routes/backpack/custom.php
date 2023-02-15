@@ -27,6 +27,7 @@ Route::group([
         Route::namespace('Workspace')->group(function() {
             Route::crud('customers', 'CustomerCrudController');
             Route::crud('sprints', 'SprintCrudController');
+            Route::crud('tasks', 'TaskCrudController');
         });
     });
 }); // this should be the absolute last line of this file

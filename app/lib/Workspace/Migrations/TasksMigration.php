@@ -13,17 +13,17 @@ class TasksMigration extends AbstractMigration
     public function upClosure(): \Closure
     {
         return function (Blueprint $table) {
-           $table->string('name');
-           $table->text('description');
-           $table->string('tag');
-           $table->integer('priority');
-           $table->string('status');
-           $table->dateTime('closed_at')->nullable();
-           $table->unsignedBigInteger('sprint_id')->nullable();
-           $table->unsignedBigInteger('customer_id')->nullable();
-           $table->foreign('sprint_id')->references('id')->on('sprints');
-           $table->foreign('customer_id')->references('id')->on('customers');
-           $table->timestamps();
+            $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->integer('priority')->nullable();
+            $table->string('status');
+            $table->dateTime('closed_at')->nullable();
+            $table->unsignedBigInteger('sprint_id')->nullable();
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->foreign('sprint_id')->references('id')->on('sprints');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->timestamps();
         };
     }
 

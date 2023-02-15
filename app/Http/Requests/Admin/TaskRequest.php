@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
+use App\Models\Workspace;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
-class UserRequest extends FormRequest
+class TaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +27,12 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:5|max:255',
-            'email' => 'required|email:rfc,dns',
-            'password' => 'required|min:6',
+             'name' => 'required|min:5|max:255',
+             'description' => 'required|string',
+             'priority' => 'nullable|int',
+             'status' => 'nullable|string',
+             'sprint_id' => 'nullable|int|exists:workspace.sprints,id',
+             'customer_id' => 'nullable|int|exists:workspace.customers,id',
         ];
     }
 
