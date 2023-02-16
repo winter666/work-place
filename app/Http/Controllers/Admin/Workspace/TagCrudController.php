@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin\Workspace;
 
-use App\Http\Requests\Admin\SprintRequest;
-use App\Models\WorkspaceImage\Sprint;
+use App\Http\Requests\Admin\TagRequest;
+use App\Models\WorkspaceImage\Tag;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class CustomerCrudController
- * @package App\Http\Controllers\Admin\Workspace
+ * Class TagCrudController
+ * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class SprintCrudController extends CrudController
+class TagCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,9 +28,9 @@ class SprintCrudController extends CrudController
     public function setup()
     {
         $workspaceId = $this->crud->getRequest()->workspace;
-        CRUD::setModel(Sprint::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') .'/workspace/'. $workspaceId . '/' . (new Sprint)->getTable());
-        CRUD::setEntityNameStrings('sprint', 'sprints');
+        CRUD::setModel(Tag::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/workspace/'.$workspaceId.'/'.(new Tag())->getTable());
+        CRUD::setEntityNameStrings('tag', 'tags');
     }
 
     /**
@@ -43,14 +43,8 @@ class SprintCrudController extends CrudController
     {
         CRUD::column('id');
         CRUD::column('name');
-        CRUD::column('description');
-        CRUD::column('start_at');
-        CRUD::column('end_at');
-    }
+        CRUD::column('slug');
 
-    protected function setupShowOperation()
-    {
-        $this->setupListOperation();
     }
 
     /**
@@ -61,16 +55,15 @@ class SprintCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(SprintRequest::class);
+        CRUD::setValidation(TagRequest::class);
 
-        CRUD::field('name');
-        CRUD::addField([
-            'name'  => 'description',
-            'label' => 'Description',
-            'type'  => 'summernote',
-        ]);
-        CRUD::field('start_at');
-        CRUD::field('end_at');
+        CRUD::setFromDb(); // fields
+
+        /**
+         * Fields can be defined using the fluent syntax or array syntax:
+         * - CRUD::field('price')->type('number');
+         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
+         */
     }
 
     /**

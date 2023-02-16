@@ -21,8 +21,8 @@ class TasksMigration extends AbstractMigration
             $table->dateTime('closed_at')->nullable();
             $table->unsignedBigInteger('sprint_id')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();
-            $table->foreign('sprint_id')->references('id')->on('sprints');
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('sprint_id')->references('id')->on('sprints')->cascadeOnDelete();
+            $table->foreign('customer_id')->references('id')->on('customers')->cascadeOnDelete();
             $table->timestamps();
         };
     }

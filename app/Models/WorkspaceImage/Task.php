@@ -4,6 +4,7 @@ namespace App\Models\WorkspaceImage;
 
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Task extends AbstractImageEntry
 {
@@ -50,5 +51,20 @@ class Task extends AbstractImageEntry
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function tags(): MorphToMany {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function getTagsHtml() {
+        $count = $this->tags->count();
+        $resStr = '';
+        foreach ($this->tags as $key => $tag) {
+            $sym = ($count > 1 && $count !== $key + 1) ? ', ' : '';
+            $resStr .= $tag->name . $sym;
+        }
+
+        return $count ? $resStr : '-';
     }
 }

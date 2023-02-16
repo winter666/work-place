@@ -47,7 +47,7 @@ class TaskCrudController extends CrudController
         CRUD::column('name');
         CRUD::column('description');
         CRUD::column('priority');
-        CRUD::column('status');
+        CRUD::column('status'); // TODO: Переделать на enum
         CRUD::column('closed_at');
         CRUD::addColumn([
             'name' => 'sprint.name',
@@ -57,6 +57,17 @@ class TaskCrudController extends CrudController
             'name' => 'customer.email',
             'label' => trans('workspace.customer'),
         ]);
+        CRUD::addColumn([
+            'name' => 'tags',
+            'label' => 'Tags',
+            'type' => 'model_function',
+            'function_name' => 'getTagsHtml',
+        ]);
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
     }
 
     /**
@@ -70,13 +81,23 @@ class TaskCrudController extends CrudController
         CRUD::setValidation(TaskRequest::class);
 
         CRUD::field('name');
-        CRUD::field('description');
+        CRUD::addField([
+            'name'  => 'description',
+            'label' => 'Description',
+            'type'  => 'summernote',
+        ]);
         CRUD::field('priority');
         CRUD::addField([
             'type' => 'select',
             'name' => 'sprint_id',
             'model' => Sprint::class,
             'attribute' => 'name',
+            'allows_null' => true,
+        ]);
+        CRUD::addField([
+            'label' => "Tags",
+            'type' => 'select_multiple',
+            'name' => 'tags',
             'allows_null' => true,
         ]);
     }
@@ -92,9 +113,13 @@ class TaskCrudController extends CrudController
         CRUD::setValidation(TaskRequest::class);
 
         CRUD::field('name');
-        CRUD::field('description');
-        CRUD::field('priority');
         CRUD::addField([
+            'name'  => 'description',
+            'label' => 'Description',
+            'type'  => 'summernote',
+        ]);
+        CRUD::field('priority');
+        CRUD::addField([ // TODO: Переделать на enum
             'type' => 'select_from_array',
             'name' => 'status',
             'options' => Task::STATUSES
@@ -111,6 +136,12 @@ class TaskCrudController extends CrudController
             'name' => 'customer_id',
             'model' => Customer::class,
             'attribute' => 'email',
+            'allows_null' => true,
+        ]);
+        CRUD::addField([
+            'label' => "Tags",
+            'type' => 'select_multiple',
+            'name' => 'tags',
             'allows_null' => true,
         ]);
     }

@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Models\Workspace;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
-class TaskRequest extends FormRequest
+class TagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,12 +25,8 @@ class TaskRequest extends FormRequest
     public function rules()
     {
         return [
-             'name' => 'required|min:5|max:255',
-             'description' => 'nullable|string',
-             'priority' => 'nullable|int',
-             'status' => 'nullable|string',
-             'sprint_id' => 'nullable|int|exists:workspace.sprints,id',
-             'customer_id' => 'nullable|int|exists:workspace.customers,id',
+             'name' => 'required|min:2|max:255',
+             'slug' => 'required|string|alpha_dash',
         ];
     }
 

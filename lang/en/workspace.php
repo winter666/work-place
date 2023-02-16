@@ -8,4 +8,6 @@ return [
     'sprint' => 'Sprint',
     'tasks' => 'Tasks',
     'task' => 'Task',
+    'tags' => 'Tags',
+    'tag' => 'Tag',
 ];
