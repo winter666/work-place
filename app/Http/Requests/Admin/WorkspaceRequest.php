@@ -28,7 +28,6 @@ class WorkspaceRequest extends FormRequest
         return [
              'name' => 'required|min:5|max:255',
              'password' => 'required|min:6',
-             'user_id' => ['required', Rule::exists('users', 'id')],
         ];
     }
 

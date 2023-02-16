@@ -4,8 +4,8 @@ namespace App\Lib\Workspace;
 
 class WorkspaceStatusesConst
 {
-    public const STATUS_CREATED = 'created';
-    public const STATUS_PROCESSING = 'processing';
-    public const STATUS_COMPLETED = 'completed';
-    public const STATUS_ERROR = 'error';
+    public const STATUS_CREATED = 'CREATED';
+    public const STATUS_PROCESSING = 'PROCESSING';
+    public const STATUS_COMPLETED = 'COMPLETED';
+    public const STATUS_ERROR = 'ERROR';
 }

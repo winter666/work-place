@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\WorkspaceRequest;
 use App\Models\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Class WorkspaceCrudController
@@ -15,7 +16,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class WorkspaceCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -30,6 +31,9 @@ class WorkspaceCrudController extends CrudController
         CRUD::setModel(\App\Models\Workspace::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/workspace');
         CRUD::setEntityNameStrings('workspace', 'workspaces');
+        if (!backpack_user()->is_admin) {
+            $this->crud->query->where('user_id', backpack_user()->id);
+        }
     }
 
     /**
@@ -43,6 +47,13 @@ class WorkspaceCrudController extends CrudController
         CRUD::column('id');
         CRUD::column('name');
         CRUD::column('status');
+        if (backpack_user()->is_admin) {
+            CRUD::addColumn([
+                'name' => 'user.email',
+                'label' => 'User',
+            ]);
+        }
+
         $this->crud->addButtonFromModelFunction('line', 'enter', 'enterWorkspaceView', 'beginning');
     }
 
@@ -58,14 +69,32 @@ class WorkspaceCrudController extends CrudController
 
         CRUD::field('name');
         CRUD::field('password');
-        CRUD::addField([
-            'label' => 'User',
-            'type' => 'select',
-            'name' => 'user_id',
-            'model' => User::class,
-            'attribute' => 'email',
-        ]);
+        if (backpack_user()->is_admin) {
+            CRUD::addField([
+                'label' => 'User',
+                'type' => 'select',
+                'name' => 'user_id',
+                'model' => User::class,
+                'attribute' => 'email',
+            ]);
+        }
     }
+
+    public function store(): RedirectResponse
+    {
+        $this->crud->setRequest($this->crud->validateRequest());
+
+        $request = $this->crud->getRequest();
+        if (!$request->input('user_id')) {
+            $request->request->set('user_id', backpack_user()->id);
+        }
+
+        $this->crud->setRequest($request);
+        $this->crud->unsetValidation();
+        $this->crud->field('user_id');
+        return $this->traitStore();
+    }
+
 
     /**
      * Define what happens when the Update operation is loaded.

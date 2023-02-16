@@ -13,7 +13,7 @@ Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
     'middleware' => array_merge(
         (array) config('backpack.base.web_middleware', 'web'),
-        (array) config('backpack.base.middleware_key', 'admin')
+        (array) config('backpack.base.middleware_key', 'admin'),
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
@@ -21,7 +21,7 @@ Route::group([
     Route::crud('workspace', 'WorkspaceCrudController');
 
     // show workspace entries
-    Route::middleware('workspace.admin')->prefix('workspace/{workspace}')->group(function () {
+    Route::middleware('workspace.set')->prefix('workspace/{workspace}')->group(function () {
         Route::get('entries', [WorkspaceController::class, 'index'])->name('admin.workspace.entries');
 
         Route::namespace('Workspace')->group(function() {
