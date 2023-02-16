@@ -82,5 +82,6 @@ class SprintCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+        CRUD::field('closed_at');
     }
 }

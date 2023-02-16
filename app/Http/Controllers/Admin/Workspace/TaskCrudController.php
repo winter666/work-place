@@ -110,38 +110,12 @@ class TaskCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        CRUD::setValidation(TaskRequest::class);
-
-        CRUD::field('name');
-        CRUD::addField([
-            'name'  => 'description',
-            'label' => 'Description',
-            'type'  => 'summernote',
-        ]);
-        CRUD::field('priority');
-        CRUD::addField([ // TODO: Переделать на enum
-            'type' => 'select_from_array',
-            'name' => 'status',
-            'options' => Task::STATUSES
-        ]);
-        CRUD::addField([
-            'type' => 'select',
-            'name' => 'sprint_id',
-            'model' => Sprint::class,
-            'attribute' => 'name',
-            'allows_null' => true,
-        ]);
+        $this->setupCreateOperation();
         CRUD::addField([
             'type' => 'select',
             'name' => 'customer_id',
             'model' => Customer::class,
             'attribute' => 'email',
-            'allows_null' => true,
-        ]);
-        CRUD::addField([
-            'label' => "Tags",
-            'type' => 'select_multiple',
-            'name' => 'tags',
             'allows_null' => true,
         ]);
     }
