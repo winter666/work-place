@@ -13,7 +13,9 @@ class CustomersMigration extends AbstractMigration
         return function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('profile_image')->nullable();
             $table->string('email')->unique();
+            $table->dateTime('email_verified_at')->nullable();
             $table->string('password');
             $table->timestamps();
         };

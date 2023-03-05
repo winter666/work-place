@@ -9,6 +9,8 @@ use App\Models\Workspace;
 use Carbon\Carbon;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class WorkspaceImageCreator
 {
@@ -24,7 +26,7 @@ class WorkspaceImageCreator
         $statement = DB::getPdo()->prepare("CREATE DATABASE workspace_{$this->workspace->id}");
         $statement->execute();
         $this->status = 'succeed';
-        $this->workspace->update(['status' => WorkspaceStatusesConst::STATUS_COMPLETED]);
+        $this->workspace->update(['status' => WorkspaceStatusesConst::STATUS_COMPLETED, 'app_key' => Hash::make(Str::random(32))]);
     }
 
     public function migrate()

@@ -36,7 +36,7 @@ class Workspace extends Model
     ];
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    protected $fillable = ['user_id', 'name', 'password', 'status'];
+    protected $fillable = ['user_id', 'name', 'status', 'app_key'];
     protected $hidden = ['password'];
 
     /*

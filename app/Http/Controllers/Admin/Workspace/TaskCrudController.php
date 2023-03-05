@@ -47,7 +47,7 @@ class TaskCrudController extends CrudController
         CRUD::column('name');
         CRUD::column('description');
         CRUD::column('priority');
-        CRUD::column('status'); // TODO: Переделать на enum
+        CRUD::column('status');
         CRUD::column('closed_at');
         CRUD::addColumn([
             'name' => 'sprint.name',

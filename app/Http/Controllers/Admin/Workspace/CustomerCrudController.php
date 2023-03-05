@@ -44,6 +44,7 @@ class CustomerCrudController extends CrudController
         CRUD::column('id');
         CRUD::column('name');
         CRUD::column('email');
+        CRUD::column('email_verified_at');
         CRUD::column('password');
     }
 
@@ -63,7 +64,16 @@ class CustomerCrudController extends CrudController
         CRUD::setValidation(CustomerRequest::class);
 
         CRUD::field('name');
+        CRUD::addField([
+            'name' => 'profile_image',
+            'label' => 'Image',
+            'type' => 'upload',
+            'upload' => true,
+            'disk' => 'uploads',
+            'temporary' => 10,
+        ]);
         CRUD::field('email');
+        CRUD::field('email_verified_at');
         CRUD::field('password');
     }
 

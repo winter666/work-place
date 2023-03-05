@@ -47,6 +47,7 @@ class WorkspaceCrudController extends CrudController
         CRUD::column('id');
         CRUD::column('name');
         CRUD::column('status');
+        CRUD::column('app_key');
         if (backpack_user()->is_admin) {
             CRUD::addColumn([
                 'name' => 'user.email',
@@ -68,7 +69,6 @@ class WorkspaceCrudController extends CrudController
         CRUD::setValidation(WorkspaceRequest::class);
 
         CRUD::field('name');
-        CRUD::field('password');
         if (backpack_user()->is_admin) {
             CRUD::addField([
                 'label' => 'User',

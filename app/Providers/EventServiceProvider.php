@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Workspace;
+use App\Models\WorkspaceImage\Customer;
+use App\Observers\CustomerObserver;
 use App\Observers\WorkspaceObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -24,6 +26,7 @@ class EventServiceProvider extends ServiceProvider
 
     protected $observers = [
         Workspace::class => [WorkspaceObserver::class],
+        Customer::class => [CustomerObserver::class],
     ];
 
     /**
