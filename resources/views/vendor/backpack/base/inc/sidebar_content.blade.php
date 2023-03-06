@@ -4,8 +4,8 @@
      * @var Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade $crud
      */
 @endphp
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
 @if (backpack_user()->is_admin)
-    <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ backpack_url('user') }}"><i class="nav-icon la la-user"></i> {{ trans('system.users') }}</a></li>
 @endif
 
